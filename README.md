@@ -4,9 +4,9 @@
 
 | Name | Contribution |
 |---|---|
-| Isimbi Nelly Assoumpta | Part 1 |
-| Sarah Gasaro | Part 2 |
-| Divine Kuzo | Part 3 & 4 |
+| Isimbi Nelly Assoumpta | Part 1&3 |
+| Sarah Gasaro | Part 2&3 |
+| Divine Kuzo | Part 4&3|
 
 ---
 
