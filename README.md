@@ -2,31 +2,105 @@
 
 ## Group Members
 
-Isimbi Nelly Assoumpta
-Sarah Gasaro
-Divine Kuzo
+| Name | Contribution |
+|---|---|
+| Isimbi Nelly Assoumpta | Part 1, 3 |
+| Sarah Gasaro | Part 2, 3 |
+| Divine Kuzo | Part  4, 3 |
 
-## Project Overview
+---
 
-This project covers four core Machine Learning concepts, implemented from scratch in Python:
+# Project Overview
+
+This project applies core probabilistic Machine Learning concepts, built from scratch in Python rather than through pre-built libraries.
+
+The work is split into four parts:
 
 1. Expectation-Maximization (EM) Algorithm
 2. Bayesian Probability using IMDb Movie Reviews
 3. Manual Gradient Descent Calculations
-4. Gradient Descent in Python
+4. Gradient Descent Implementation in Python
 
-The goal was to understand the math behind these algorithms rather than just calling a library function.
+The focus throughout was understanding how each algorithm actually works internally, rather than treating it as a black box.
 
-## EM Algorithm
+---
 
-We separated a dataset of parent and child heights into two Gaussian distributions, without using any labels. This included writing the E-step, M-step, log-likelihood calculation, and the full optimization loop from scratch, then using the trained model to classify a new height and give posterior probabilities.
+# Project Structure
 
-## Bayesian Probability
+ML-formative3-Team18/
+│
+├── data/
+│   ├── GaltonFamilies.csv
+│   └── IMDB Dataset.csv
+│
+├── notebooks/
+│   ├── Merged_notebook.ipynb
+│   └── Part3_Manual_Calculations.pdf
+│
+├── src/
+│   ├── em_heights.py
+│   ├── bayes_sentiment.py
+│   └── gradient_descent.py
+│
+├── submission/
+│   └── contribution_tracker.pdf
+│
+└── README.md
 
-Using the IMDb reviews dataset (50,000 reviews, half positive and half negative), we calculated P(Positive | keyword) for six chosen words.
+---
 
-Positive keywords: wonderful, excellent, brilliant
-Negative keywords: boring, awful, waste
+# Part 1 – Expectation Maximization (EM)
+
+## Objective
+
+Separate a mixed, unlabeled dataset of Mother and Child heights into two underlying Gaussian distributions.
+
+## Implementation
+
+Built entirely from scratch:
+
+- Gaussian Probability Density Function
+- Expectation Step (soft responsibilities)
+- Maximization Step (parameter updates)
+- Log-Likelihood tracking
+- Full EM optimization loop
+- Posterior-based classification of a new height
+
+No machine learning libraries were used for the core algorithm.
+
+## Outputs
+
+- Histogram of the mixed heights with fitted Gaussian curves overlaid
+- Tracking table of μ, σ², π, and log-likelihood for the initial state and first two iterations
+- Live classification of a test height into Child vs. Adult, with exact posterior probabilities
+
+---
+
+# Part 2 – Bayesian Probability
+
+## Objective
+
+Use Bayes' Theorem to calculate P(Positive | Keyword) on the IMDb Movie Reviews dataset (50,000 reviews, evenly split between positive and negative).
+
+## Keywords
+
+Positive-signal keywords:
+- wonderful
+- excellent
+- brilliant
+
+Negative-signal keywords:
+- boring
+- awful
+- waste
+
+## Probabilities Computed
+
+For every keyword:
+- Prior: P(Positive)
+- Likelihood: P(keyword | Positive)
+- Marginal: P(keyword)
+- Posterior: P(Positive | keyword)
 
 | Keyword | Prior | Likelihood | Marginal | Posterior |
 |---|---|---|---|---|
@@ -37,35 +111,121 @@ Negative keywords: boring, awful, waste
 | awful | 0.5000 | 0.0136 | 0.0624 | 0.1093 |
 | waste | 0.5000 | 0.0145 | 0.0731 | 0.0993 |
 
-Positive words gave a posterior around 77-82%, while negative words gave a posterior around 10-20%. This confirms the keywords chosen actually carry sentiment signal. Everything was done with plain Python (no external libraries), using the built-in csv module.
+Positive-signal words carry a 77–82% posterior of appearing in a positive review, while negative-signal words carry only 10–20% — a clear, well-justified split.
 
-## Manual Gradient Descent
+Bayes' Theorem was implemented using basic Python only (the built-in csv module), with no external ML libraries.
 
-We manually worked through three gradient descent updates for a small linear regression model, using matrix multiplication rather than treating values as scalars.
+---
 
-Starting values: m = [-1, 2], b = [1, 1], learning rate = 0.01
+# Part 3 – Manual Gradient Descent
 
-Across the three iterations, the error dropped sharply and m and b started to stabilize, showing the parameters were moving in the right direction to reduce error.
+## Objective
 
-## Gradient Descent in Code
+Manually compute three Gradient Descent updates for a two-feature linear regression model.
 
-We converted the manual calculations into Python, using a small custom derivative function (since scipy.misc.derivative has been removed in newer SciPy versions) so every calculation step stays visible instead of being hidden inside a library call. Matplotlib was used to plot how m, b, and the error changed across iterations.
+## Manual Calculations
 
-## Technologies Used
+For each iteration, the following was worked out by hand:
 
-Python, NumPy, Matplotlib
+- Predictions (via matrix multiplication, not scalar values)
+- Errors
+- Mean Squared Error
+- Gradient of MSE, with the chain rule shown explicitly
+- Updated m₁, m₂, and b
 
-## Running the Code
+Starting values: m = [-1, 2], b = 1, learning rate = 0.01
+
+Result across three iterations: cost dropped from 61 → 6.845 → 2.724, while m and b progressively stabilized rather than diverging — confirming the parameters were moving in a direction that reduces error.
+
+---
+
+# Part 4 – Gradient Descent in Python
+
+## Objective
+
+Convert the Part 3 manual calculations into working code.
+
+## Implementation
+
+The program performs:
+
+- Matrix-based prediction (X @ m + b)
+- Cost computation (MSE)
+- Gradient computation, using a custom derivative function
+- Parameter updates
+- Error tracking across iterations
+
+A custom finite-difference derivative function was used in place of scipy.misc.derivative, since it has been removed from recent SciPy versions — this also keeps every calculation step visible rather than hidden inside a library call.
+
+Matplotlib was used to visualize:
+
+- Changes in m and b over iterations
+- Error reduction over iterations
+
+The final code output (m = [-1.3696, 1.0952], b = 0.9362) matches the Part 3 manual calculations exactly.
+
+---
+
+# Technologies Used
+
+- Python
+- NumPy
+- Matplotlib
+- csv (built-in)
+
+---
+
+# Installation
+
+Clone the repository:
+
+git clone https://github.com/s-gasaro/ML-formative3-Team18.git
+
+Install dependencies:
+
+pip install numpy matplotlib
+
+---
+
+# Running the Project
+
+Part 1:
+python em_heights.py
 
 Part 2:
-
-cd part2_bayes
 python bayes_sentiment.py
 
 Part 4:
-cd part3_4_gradient_descent
 python gradient_descent.py
 
-## What We Learned
+---
 
-Gaussian distributions and mixture models, the EM algorithm, Bayes' theorem, matrix multiplication, mean squared error, and gradient descent as an optimization method.
+# Results
+
+The EM algorithm successfully separates the mixed height data into two distinct Gaussian distributions corresponding to Children and Adults.
+
+Bayesian inference clearly distinguishes positive-signal from negative-signal keywords based on their posterior probabilities.
+
+Gradient Descent demonstrates convergence, with the cost function dropping from 61 to under 3 across three iterations.
+
+---
+
+# Learning Outcomes
+
+Through this project we gained hands-on understanding of:
+
+- Gaussian distributions and mixture models
+- Expectation-Maximization
+- Bayesian probability and Bayes' Theorem
+- Matrix multiplication
+- Mean Squared Error
+- Gradient Descent and numerical optimization
+
+---
+
+# References
+
+- Galton Families Dataset
+- IMDb Movie Reviews Dataset
+- NumPy Documentation
+- Matplotlib Documentation
